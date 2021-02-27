@@ -1,35 +1,21 @@
+import org.junit.Assert;
+import org.junit.Test;
 
+public class MyNodeTest {
 
-public class MyNode<K> implements INode<K> {
-	private K key;
-	private INode next;
-
-	public MyNode(K key) {
-		this.key = key;
-		this.next = null;
-	}
-
-	@Override
-	public K getKey() {
-		return key;
-	}
-
-	@Override
-	public void setKey(K key) {
-		this.key = key;
-	}
-
-	@Override
-	public void setNext(INode next) {
-		this.next = next;
-
-	}
-
-	@Override
-	public INode<K> getNext() {
-		return next;
+	@Test
+	public void given3Numbers_whenLinked_shouldPassLinkedListTest() {
+		MyNode<Integer> myFirstNode = new MyNode<>(56);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myThirdNode = new MyNode<>(56);
+		myFirstNode.setNext(mySecondNode);
+		mySecondNode.setNext(myThirdNode);
+		boolean result = myFirstNode.getNext().equals(mySecondNode) && mySecondNode.getNext().equals(myThirdNode);
+		Assert.assertTrue(result);
 	}
 }
+
+
 
 
 
