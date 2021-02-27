@@ -1,33 +1,21 @@
-public class MyStack {
-	private final MyLinkedList myLinkedList;
-	static int count = 0; 
-	public MyStack() {
-		this.myLinkedList = new MyLinkedList();
-	}
+import org.junit.Assert;
+import org.junit.Test;
+
+public class MyStackTest {
+
 	
-	public void push(INode myNode) {
-		myLinkedList.add(myNode);
-		count = count +1;
-	}
 	
-	public void printStack() {
-		myLinkedList.printMyNodes();
-	}
-	
-	public INode peak() {
-		return myLinkedList.head;
-	}
-	
-	public INode pop() {
-		count = count -1;
-		return myLinkedList.pop();
-	}
-	
-	public void popTillEmpty() {
-		while(count>0) {
-			myLinkedList.pop();
-			count = count -1;
-		}
+	@Test
+	public void given3NumbersInStack_WhenPoped_ShouldMatchLastAddedNode() {
+		MyNode<Integer> myFirstNode = new MyNode<>(70);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myThirdNode = new MyNode<>(56);
+		MyStack myStack = new MyStack();
+		myStack.push(myFirstNode);
+		myStack.push(mySecondNode);
+		myStack.push(myThirdNode);
+		myStack.popTillEmpty();
+		Assert.assertEquals(myStack.count,0);
 	}
 }
 
