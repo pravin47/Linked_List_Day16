@@ -1,110 +1,35 @@
-public class MyLinkedList {
 
-	public INode head;
-	public INode tail;
 
-	public MyLinkedList() {
-		this.head = null;
-		this.tail = null;
+public class MyNode<K> implements INode<K> {
+	private K key;
+	private INode next;
+
+	public MyNode(K key) {
+		this.key = key;
+		this.next = null;
 	}
 
-	public void add(INode newNode) {
-		if (this.tail == null) {
-			this.tail = newNode;
-		}
-		if (this.head == null) {
-			this.head = newNode;
-		} else {
-			newNode.setNext(head);
-			this.head = newNode;
-		}
+	@Override
+	public K getKey() {
+		return key;
 	}
 
-	public void append(INode newNode) {
-		if (this.tail == null) {
-			this.tail = newNode;
-		}
-		if (this.head == null) {
-			this.head = newNode;
-		} else {
-			this.tail.setNext(newNode);
-			this.tail = newNode;
-		}
+	@Override
+	public void setKey(K key) {
+		this.key = key;
 	}
 
-	public void insert(INode myNode, INode newNode) {
-		INode tempNode = myNode.getNext();
-		myNode.setNext(newNode);
-		newNode.setNext(tempNode);
+	@Override
+	public void setNext(INode next) {
+		this.next = next;
+
 	}
 
-	public INode pop() {
-		INode tempNode = this.head;
-		this.head = head.getNext();
-		return tempNode;
+	@Override
+	public INode<K> getNext() {
+		return next;
 	}
-
-	public INode popLast() {
-		INode tempNode = head;
-		while (!tempNode.getNext().equals(tail)) {
-			tempNode = tempNode.getNext();
-		}
-		tempNode.setNext(null);
-		this.tail = tempNode;
-		return tempNode;
-	}
-
-	public <K> INode search(K key) {
-		INode tempNode = head;
-		while (!tempNode.equals(null)) {
-			if (tempNode.getKey().equals(key)) {
-				break;
-			}
-			tempNode = tempNode.getNext();
-		}
-		return tempNode;
-	}
-
-	public <K> void insertAfter(INode newNode, K key) {
-		INode myNode = search(key);
-		INode tempNode = myNode.getNext();
-		myNode.setNext(newNode);
-		newNode.setNext(tempNode);
-	}
-
-	public <K> INode remove(K key) {
-		INode tempNode = head;
-		while (!tempNode.getNext().getKey().equals(key)) {
-			tempNode = tempNode.getNext();
-			break;
-		}
-		tempNode.setNext(tempNode.getNext().getNext());
-		return tempNode.getNext();
-	}
-
-	public int size() {
-		int count = 1;
-		INode tempNode = head;
-		while (tempNode.getNext()!= null) {
-			tempNode = tempNode.getNext();
-			count++;
-		}
-		return count;
-	}
-
-	public void printMyNodes() {
-		StringBuffer myNodes = new StringBuffer("My Nodes: ");
-		INode tempNode = head;
-		while (tempNode.getNext() != null) {
-			myNodes.append(tempNode.getKey());
-			if (!tempNode.equals(tail))
-				myNodes.append("->");
-			tempNode = tempNode.getNext();
-		}
-		myNodes.append(tempNode.getKey());
-		System.out.println(myNodes);
-	}
-
 }
+
 
 
