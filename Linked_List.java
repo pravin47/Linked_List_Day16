@@ -1,110 +1,134 @@
-public class MyLinkedList {
+import org.junit.Assert;
+import org.junit.Test;
 
-	public INode head;
-	public INode tail;
+public class MyLinkedListTest {
 
-	public MyLinkedList() {
-		this.head = null;
-		this.tail = null;
+	@Test
+	public void given3Numbers_WhenAddedToList_ShouldBeAddedToTop() {
+		MyNode<Integer> myFirstNode = new MyNode<>(70);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myThirdNode = new MyNode<>(56);
+		MyLinkedList myLinkedList = new MyLinkedList();
+		myLinkedList.add(myFirstNode);
+		myLinkedList.add(mySecondNode);
+		myLinkedList.add(myThirdNode);
+		boolean result = myLinkedList.head.equals(myThirdNode) && myLinkedList.head.getNext().equals(mySecondNode)
+				&& myLinkedList.tail.equals(myFirstNode);
+		Assert.assertTrue(result);
+		myLinkedList.printMyNodes();
 	}
 
-	public void add(INode newNode) {
-		if (this.tail == null) {
-			this.tail = newNode;
-		}
-		if (this.head == null) {
-			this.head = newNode;
-		} else {
-			newNode.setNext(head);
-			this.head = newNode;
-		}
+	@Test
+	public void given3Numbers_WhenAddedToList_ShouldBeAddedToBottom() {
+		MyNode<Integer> myFirstNode = new MyNode<>(56);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myThirdNode = new MyNode<>(70);
+		MyLinkedList myLinkedList = new MyLinkedList();
+		myLinkedList.append(myFirstNode);
+		myLinkedList.append(mySecondNode);
+		myLinkedList.append(myThirdNode);
+		boolean result = myLinkedList.head.equals(myFirstNode) && myLinkedList.head.getNext().equals(mySecondNode)
+				&& myLinkedList.tail.equals(myThirdNode);
+		Assert.assertTrue(result);
+		myLinkedList.printMyNodes();
 	}
 
-	public void append(INode newNode) {
-		if (this.tail == null) {
-			this.tail = newNode;
-		}
-		if (this.head == null) {
-			this.head = newNode;
-		} else {
-			this.tail.setNext(newNode);
-			this.tail = newNode;
-		}
+	@Test
+	public void givenANumbers_WhenAddedToList_ShouldBeAddedInBetween() {
+		MyNode<Integer> myFirstNode = new MyNode<>(56);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myThirdNode = new MyNode<>(70);
+		MyLinkedList myLinkedList = new MyLinkedList();
+		myLinkedList.append(myFirstNode);
+		myLinkedList.append(myThirdNode);
+		myLinkedList.insert(myFirstNode, mySecondNode);
+		boolean result = myLinkedList.head.equals(myFirstNode) && myLinkedList.head.getNext().equals(mySecondNode)
+				&& myLinkedList.tail.equals(myThirdNode);
+		Assert.assertTrue(result);
+		myLinkedList.printMyNodes();
 	}
 
-	public void insert(INode myNode, INode newNode) {
-		INode tempNode = myNode.getNext();
-		myNode.setNext(newNode);
-		newNode.setNext(tempNode);
+	@Test
+	public void given3Numbers_WhenAddedPoped_ShouldDeleteFirstElement() {
+		MyNode<Integer> myFirstNode = new MyNode<>(56);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myThirdNode = new MyNode<>(70);
+		MyLinkedList myLinkedList = new MyLinkedList();
+		myLinkedList.add(myFirstNode);
+		myLinkedList.append(mySecondNode);
+		myLinkedList.append(myThirdNode);
+		myLinkedList.pop();
+		boolean result = myLinkedList.head.equals(mySecondNode) && myLinkedList.head.getNext().equals(myThirdNode)
+				&& myLinkedList.tail.equals(myThirdNode);
+		Assert.assertTrue(result);
+		myLinkedList.printMyNodes();
 	}
-
-	public INode pop() {
-		INode tempNode = this.head;
-		this.head = head.getNext();
-		return tempNode;
+	
+	@Test
+	public void given3Numbers_WhenAddedPopLast_ShouldDeleteLastElement() {
+		MyNode<Integer> myFirstNode = new MyNode<>(56);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myThirdNode = new MyNode<>(70);
+		MyLinkedList myLinkedList = new MyLinkedList();
+		myLinkedList.add(myFirstNode);
+		myLinkedList.append(mySecondNode);
+		myLinkedList.append(myThirdNode);
+		myLinkedList.popLast();
+		boolean result = myLinkedList.head.equals(myFirstNode) && myLinkedList.head.getNext().equals(mySecondNode)
+				&& myLinkedList.tail.equals(mySecondNode);
+		Assert.assertTrue(result);
+		myLinkedList.printMyNodes();
 	}
-
-	public INode popLast() {
-		INode tempNode = head;
-		while (!tempNode.getNext().equals(tail)) {
-			tempNode = tempNode.getNext();
-		}
-		tempNode.setNext(null);
-		this.tail = tempNode;
-		return tempNode;
+	
+	@Test
+	public void givenANumber_WhenPresent_ShouldReturnTrue() {
+		MyNode<Integer> myFirstNode = new MyNode<>(56);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myThirdNode = new MyNode<>(70);
+		MyLinkedList myLinkedList = new MyLinkedList();
+		myLinkedList.add(myFirstNode);
+		myLinkedList.append(mySecondNode);
+		myLinkedList.append(myThirdNode);
+		boolean result =myLinkedList.search(30).equals(mySecondNode);
+		Assert.assertTrue(result);
+		myLinkedList.printMyNodes();
 	}
-
-	public <K> INode search(K key) {
-		INode tempNode = head;
-		while (!tempNode.equals(null)) {
-			if (tempNode.getKey().equals(key)) {
-				break;
-			}
-			tempNode = tempNode.getNext();
-		}
-		return tempNode;
+	
+	@Test
+	public void givenANumbers_WhenAddedToList_ShouldBeAddedAfterANumber() {
+		MyNode<Integer> myFirstNode = new MyNode<>(56);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myFourthNode = new MyNode<>(70);
+		MyNode<Integer> myThirdNode = new MyNode<>(40);
+		MyLinkedList myLinkedList = new MyLinkedList();
+		myLinkedList.append(myFirstNode);
+		myLinkedList.append(mySecondNode);
+		myLinkedList.append(myFourthNode);
+		myLinkedList.insertAfter(myThirdNode, 30);
+		boolean result = myLinkedList.head.equals(myFirstNode) && myLinkedList.head.getNext().equals(mySecondNode)
+				&& myLinkedList.tail.equals(myFourthNode);
+		Assert.assertTrue(result);
+		myLinkedList.printMyNodes();
 	}
-
-	public <K> void insertAfter(INode newNode, K key) {
-		INode myNode = search(key);
-		INode tempNode = myNode.getNext();
-		myNode.setNext(newNode);
-		newNode.setNext(tempNode);
+	
+	@Test
+	public void givenANumbers_WhenRemovedFromList_ShouldBeDeleted() {
+		MyNode<Integer> myFirstNode = new MyNode<>(56);
+		MyNode<Integer> mySecondNode = new MyNode<>(30);
+		MyNode<Integer> myFourthNode = new MyNode<>(70);
+		MyNode<Integer> myThirdNode = new MyNode<>(40);
+		MyLinkedList myLinkedList = new MyLinkedList();
+		myLinkedList.append(myFirstNode);
+		myLinkedList.append(mySecondNode);
+		myLinkedList.append(myThirdNode);
+		myLinkedList.append(myFourthNode);
+		myLinkedList.remove(40);
+		boolean result = myLinkedList.head.equals(myFirstNode) && myLinkedList.head.getNext().equals(mySecondNode)
+				&& myLinkedList.tail.equals(myFourthNode);
+		Assert.assertTrue(result);
+		myLinkedList.printMyNodes();
+		myLinkedList.size();
 	}
-
-	public <K> INode remove(K key) {
-		INode tempNode = head;
-		while (!tempNode.getNext().getKey().equals(key)) {
-			tempNode = tempNode.getNext();
-			break;
-		}
-		tempNode.setNext(tempNode.getNext().getNext());
-		return tempNode.getNext();
-	}
-
-	public int size() {
-		int count = 1;
-		INode tempNode = head;
-		while (tempNode.getNext()!= null) {
-			tempNode = tempNode.getNext();
-			count++;
-		}
-		return count;
-	}
-
-	public void printMyNodes() {
-		StringBuffer myNodes = new StringBuffer("My Nodes: ");
-		INode tempNode = head;
-		while (tempNode.getNext() != null) {
-			myNodes.append(tempNode.getKey());
-			if (!tempNode.equals(tail))
-				myNodes.append("->");
-			tempNode = tempNode.getNext();
-		}
-		myNodes.append(tempNode.getKey());
-		System.out.println(myNodes);
-	}
-
 }
 
 
